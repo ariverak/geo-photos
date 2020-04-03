@@ -8,10 +8,5 @@ export default [
       displayName: 'Fotos',
       iconName: 'camera',
       path: '/fotos'
-    },
-    {
-      displayName: 'Configuración',
-      iconName: 'home',
-      path: '/configuracion'
     }
 ];

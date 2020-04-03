@@ -1,10 +1,11 @@
 import React,{ useContext } from 'react';
 import { createUseStyles } from 'react-jss';
 import { AuthContext } from 'App'
-import { Avatar, Heading, Popover, Pane, Button,SearchInput } from 'evergreen-ui';
+import { Avatar, Heading, Popover, Pane,SearchInput, Position, Menu } from 'evergreen-ui';
 
 const useStyles = createUseStyles({
     root : {
+        position : 'relative',
         gridArea: 'header',
         background : '#25364D',
         display : 'flex',
@@ -18,12 +19,20 @@ const useStyles = createUseStyles({
     },
     search : {
         marginRight : 30
+    },
+    avatar : {
+        cursor : 'pointer'
     }
 });
 
 export default function Footer(){
     const classes = useStyles();
     const authContext = useContext(AuthContext);
+
+    function logOut(){
+        authContext.removeToken();
+        authContext.removeRefreshToken();
+    }
     return (
         <header className={classes.root}>
             <Pane display="flex" alignItems="center">
@@ -35,25 +44,25 @@ export default function Footer(){
             <Pane display="flex" alignItems="center">
                 <SearchInput className={classes.search} placeholder="Buscar..." />
                 <Popover
+                position={Position.BOTTOM_LEFT}
                 content={
-                    <Pane
-                    width={240}
-                    height={240}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    flexDirection="column"
-                    >
-                        <Button onClick={()=>{
-                            authContext.removeRefreshToken()
-                            authContext.removeToken()
-                        }}>
+                    <Menu>
+                        <Menu.Group title="JUAN RIVERA VARGAS">
+                            <Menu.Item icon="user">Mi cuenta</Menu.Item>
+                            <Menu.Item icon="cog">Configuración</Menu.Item>
+                        </Menu.Group>
+                        <Menu.Divider />
+                        <Menu.Item onClick={logOut} icon="log-out" intent="danger">
                             Salir
-                        </Button>
-                    </Pane>
+                        </Menu.Item>
+                    </Menu>
                 }
                 >
-                    <Avatar isSolid src={"https://avatars3.githubusercontent.com/u/29168528?s=460&u=5513d95e49917ca3c6b070bcdf2a40ecd53ab485&v=4"} size={40} />
+                    <Avatar 
+                    className={classes.avatar}
+                    isSolid
+                    src={"https://avatars3.githubusercontent.com/u/29168528?s=460&u=5513d95e49917ca3c6b070bcdf2a40ecd53ab485&v=4"}
+                    size={40} />
                 </Popover>
             </Pane>
         </header>
