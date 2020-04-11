@@ -1,9 +1,8 @@
 import React from 'react'
 import Sidebar from 'components/layout/Sidebar';
 import Header from 'components/layout/Header';
-import Footer from 'components/layout/Footer';
 import { createUseStyles } from 'react-jss'
-import { headerHeight, sidebarWidth, footerHeight } from './theme'
+import { headerHeight, sidebarWidth } from './theme'
 import Particles from 'react-particles-js';
 import particlesConfig from 'particlesjs-config.json'
 
@@ -13,16 +12,18 @@ const useStyles = createUseStyles({
         display: 'grid',
         height : '100vh',
         backgroundColor : '#0F1724',
-        gridTemplateRows : `${headerHeight}px 1fr ${footerHeight}px`,
+        gridTemplateRows : `${headerHeight}px 1fr`,
         gridTemplateColumns : `${sidebarWidth}px 1fr`,
         gridTemplateAreas : `"header header"
-                                "nav main"
-                                ${true ? "" : '"nav footer"'}`,
+                                "nav main"`,
         '& main' : {
             gridArea: 'main',
             padding : '2em'
         },
         zIndex : 1
+    },
+    main: {
+        overflow: 'auto'
     },
     particles : {
         position : 'absolute',
@@ -42,10 +43,9 @@ export default function Layout ({children}){
             <Particles  params={particlesConfig} className={classes.particles} />
             <Sidebar />
             <Header />
-            <main>
+            <main className={classes.main}>
                 { children }
             </main>
-            <Footer />
         </div>
     );
 }

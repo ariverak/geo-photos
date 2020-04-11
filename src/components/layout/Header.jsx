@@ -12,7 +12,8 @@ const useStyles = createUseStyles({
         justifyContent : 'space-between',
         alignItems : 'center',
         paddingLeft : 15,
-        paddingRight : 15
+        paddingRight : 15,
+        zIndex: 1000
     },
     title : {
         marginLeft : 15

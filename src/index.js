@@ -10,6 +10,8 @@ import './index.css'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet';
 
+// import classNames from 'classnames'
+
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -31,14 +33,25 @@ axios.interceptors.response.use(
     return new Promise(async (resolve,reject)=>{
       const { config, response } = err;
       const originalRequest = config;
+
       if(response && response.status === 401 && response.data.message.startsWith('jwt expired')){
-        const { data } = await axios(
-          `auth/refresh?refreshToken=${getRefreshToken()}`,
-          {method : 'POST'}
-        );
-        originalRequest.headers['Authorization'] = data.token; //new token
-        localStorage.setItem('accessToken', `"${data.token}"` );
-        resolve(axios(originalRequest));
+        try {
+          const { data } = await axios(
+            `auth/refresh?refreshToken=${getRefreshToken()}`,
+            {method : 'POST'}
+          );
+          originalRequest.headers['Authorization'] = data.token; //new token
+          localStorage.setItem('accessToken', `"${data.token}"` );
+          resolve(axios(originalRequest));
+        } catch(err) {
+          if(err.response && err.response.status === 401 && err.response.data.message.startsWith('refresh token expired')){
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            window.location.replace('/')
+          }else{
+            reject(err)
+          }
+        }
       }
       return reject(err);
     })

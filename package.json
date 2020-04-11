@@ -11,6 +11,7 @@
     "axios": "^0.19.2",
     "axios-hooks": "^1.9.0",
     "classnames": "^2.2.6",
+    "cloudinary-core": "^2.8.2",
     "evergreen-ui": "^4.24.0",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.15",
@@ -21,9 +22,11 @@
     "react-jss": "^10.1.1",
     "react-leaflet": "^2.6.3",
     "react-particles-js": "^2.7.1",
+    "react-photo-gallery": "^8.0.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-    "react-toast-notifications": "^2.4.0"
+    "react-toast-notifications": "^2.4.0",
+    "use-sound": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
